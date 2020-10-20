@@ -1,11 +1,13 @@
-require('dotenv').config()
-const {app, server} = require("./app");
+require('dotenv').config();
+const pjson = require('./package.json');
+const logger = require('./utils/logger');
+const { app, server } = require('./app');
 // const debug = require("debug")("www:server");
 
 const port = process.env.PORT || 4000;
-app.set("port", port);
+app.set('port', port);
 server.listen(port);
-console.log(`Listening on port ${port}`)
+logger.debug(`${pjson.name} running → PORT ${server.address().port}`);
 
 // USEFUL RESOURCES
 // https://socket.io/docs/#Features
