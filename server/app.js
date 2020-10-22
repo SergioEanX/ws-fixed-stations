@@ -1,12 +1,15 @@
 const express = require('express');
-const logger = require('morgan');
+const log = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path');
 const websocketRoutes = require('./routes/websocket');
+const { getChange } = require('./controllers/contrChangeStream');
 
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io', { maxHttpBufferSize: 1e5 })(server);
+
+getChange()
 
 var print_data = async () => {
   return {
@@ -18,6 +21,13 @@ var print_data = async () => {
     },
   };
 };
+
+// const callGetChangeStream = (io) =>
+//   new Promise((resolve, reject) => {
+//       const res = await getChange;
+//       io.emit('ws-fixed-stations', res);
+//       resolve(res)
+//        });
 
 const call_print_data = (io) =>
   new Promise((resolve, reject) => {
@@ -62,7 +72,7 @@ app.use(function (req, res, next) {
   res.io = io;
   next();
 });
-app.use(logger('dev'));
+app.use(log('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
