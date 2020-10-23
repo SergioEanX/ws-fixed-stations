@@ -9,41 +9,36 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io', { maxHttpBufferSize: 1e5 })(server);
 
-getChange()
+getChange(io)
 
-var print_data = async () => {
-  return {
-    date: new Date(),
-    station: 'AQ101',
-    data: {
-      PM1: parseFloat((Math.random() * (100 - 10) + 10).toFixed(3)),
-      PM10: parseFloat((Math.random() * (100 - 10) + 10).toFixed(3)),
-    },
-  };
-};
+// var print_data = async () => {
+//   return {
+//     date: new Date(),
+//     station: 'AQ101',
+//     data: {
+//       PM1: parseFloat((Math.random() * (100 - 10) + 10).toFixed(3)),
+//       PM10: parseFloat((Math.random() * (100 - 10) + 10).toFixed(3)),
+//     },
+//   };
+// };
 
-// const callGetChangeStream = (io) =>
+
+
+// const call_print_data = (io) =>
 //   new Promise((resolve, reject) => {
-//       const res = await getChange;
-//       io.emit('ws-fixed-stations', res);
-//       resolve(res)
-//        });
+//     var count = 0;
+//     var interval = setInterval(async () => {
+//       var res = await print_data();
+//       io.emit('ws-fixed-stations', res); // EMIT NEW DATA via WEBSOCKET
+//       count += 1;
 
-const call_print_data = (io) =>
-  new Promise((resolve, reject) => {
-    var count = 0;
-    var interval = setInterval(async () => {
-      var res = await print_data();
-      io.emit('ws-fixed-stations', res);
-      count += 1;
-
-      if (count === 5) {
-        // if it has been run 5 times, we resolve the promise
-        clearInterval(interval);
-        resolve(res); // result of promise
-      }
-    }, 500 * 60); // 1 min interval
-  });
+//       if (count === 5) {
+//         // if it has been run 5 times, we resolve the promise
+//         clearInterval(interval);
+//         resolve(res); // result of promise
+//       }
+//     }, 500 * 60); // 1 min interval
+//   });
 
 io.on('connection', (socket) => {
   console.log(`A client with id ${socket.id} connected`);
@@ -55,7 +50,8 @@ io.on('connection', (socket) => {
     id: socketId,
   });
 
-  call_print_data(io);
+  //call_print_data(io);
+
 
   socket.on('disconnect', () => {
     io.emit('notifications', { message: 'Connection lost!!' });
