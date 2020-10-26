@@ -10,13 +10,10 @@ server.listen(port);
 logger.debug(`${pjson.name} running → PORT ${server.address().port}`);
 
 process.on('unhandledRejection', (reason, promise) => {
-  logger.error(
-    'Unhandled rejection at ',
-    promise,
-    `reason: ${reason.message}`,
-  );
+  logger.error(`Unhandled rejection at ${promise},
+reason: ${reason.message}`);
 
-  process.exit(1);
+  //  process.exit(1);
 });
 
 process.on('uncaughtException', (err) => {
