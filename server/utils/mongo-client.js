@@ -1,3 +1,4 @@
+// MongoDB util to return mongo db collection
 const mongodbClient = require('mongodb').MongoClient;
 const logger = require('./logger');
 const mongoDB_URI = process.env.MONGO_DB_URI;
