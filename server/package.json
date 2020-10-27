@@ -1,5 +1,5 @@
 {
-  "name": "chat_example",
+  "name": "ws-fixed-stations",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,7 +14,6 @@
     "body-parser": "^1.19.0",
     "debug": "^4.2.0",
     "dotenv": "^8.2.0",
-    "eslint": "^7.11.0",
     "express": "^4.17.1",
     "moment": "^2.29.1",
     "mongodb": "^3.6.2",
@@ -25,7 +24,13 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "eslint-config-prettier": "^6.13.0",
-    "eslint-plugin-prettier": "^3.1.4"
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.14.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.0.0"
   }
 }
