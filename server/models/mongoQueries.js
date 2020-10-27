@@ -25,23 +25,8 @@ exports.getAQIdata = async (coll, strDateTime) => {
   };
 
   const pipeline = [
-    // {
-    //   $project: {
-    //     date: {
-    //       $dateToString: {
-    //         date: '$_id',
-    //         format: '%Y-%m-%d',
-    //       },
-    //     },
-    //     station: 1,
-    //     PM10: '$data.pm10_mg_m3',
-    //   },
-    // },
     {
       $match: stageDatesFilter,
-      // {
-      //   date: '2020-10-20',
-      // },
     },
     {
       $project: { station: 1, PM10: '$data.pm10_mg_m3' }, // ADD MORE POLLUTANT HERE
@@ -61,7 +46,7 @@ exports.getAQIdata = async (coll, strDateTime) => {
 
   // Aggregation framework to compute AVG
   const cursor = coll.aggregate(pipeline);
-  let result = [];
+  const result = [];
   for (
     let docAQI = await cursor.next();
     docAQI;
@@ -69,7 +54,7 @@ exports.getAQIdata = async (coll, strDateTime) => {
   ) {
     // console.log(JSON.stringify(docAQI), null, 2);
     // compute AQI according to ARPAC spec
-    docAQI.AQI = calculateAQI(docAQI.PM10avgH24);
+    docAQI.AQI = calculateAQI(docAQI.PM10avg);
     // retrive AQI info (color code, description,etc..)
     docAQI.AQIinfo = getAQIInfo(docAQI.AQI);
     // put all AQI by station into an array
