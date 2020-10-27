@@ -1,21 +1,21 @@
 const express = require('express');
-//const log = require('morgan');
+// const log = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path');
-const websocketRoutes = require('./routes/websocket');
-const { getChange } = require('./controllers/contrChangeStream');
 
 const app = express();
 const server = require('http').Server(app);
+const websocketRoutes = require('./routes/websocket');
+const logger = require('./utils/logger');
+const { getChange } = require('./controllers/contrChangeStream');
+
 const io = require('socket.io', { maxHttpBufferSize: 1e5 })(server);
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // use MongoDb change streams to emit AQI data
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 getChange(io);
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // var print_data = async () => {
 //   return {
@@ -45,7 +45,7 @@ getChange(io);
 //   });
 
 io.on('connection', (socket) => {
-  console.log(`A client with id ${socket.id} connected`);
+  logger.info(`A client with id ${socket.id} connected`);
   const socketId = socket.id;
 
   io.to(socketId).emit('notifications', {
@@ -54,7 +54,7 @@ io.on('connection', (socket) => {
     id: socketId,
   });
 
-  //call_print_data(io);
+  // call_print_data(io);
 
   socket.on('disconnect', () => {
     io.emit('notifications', { message: 'Connection lost!!' });
@@ -62,12 +62,12 @@ io.on('connection', (socket) => {
 
   socket.on('ws-fixed-stations', (msg) => {
     socket.broadcast.emit('ws-fixed-stations', msg);
-    console.log(`Message: ${msg}`);
+    logger.info(`Message: ${msg}`);
   });
 });
 
 // add socket.io as Middleware
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.io = io;
   next();
 });
