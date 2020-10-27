@@ -13,6 +13,9 @@ const io = require('socket.io', { maxHttpBufferSize: 1e5 })(server);
 // use MongoDb change streams to emit AQI data
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 getChange(io);
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 
 // var print_data = async () => {
 //   return {
