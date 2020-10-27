@@ -2,7 +2,7 @@
 // require('dotenv').config({ path: path.join(__dirname, '.env') });
 const { getChangeStream } = require('../utils/change-stream');
 const { getAQIdata } = require('../models/mongoQueries');
-const  {getCollection}  = require('../utils/mongo-client');
+const { getCollection } = require('../utils/mongo-client');
 const logger = require('../utils/logger');
 
 exports.getChange = async (io) => {
@@ -18,14 +18,14 @@ exports.getChange = async (io) => {
       process.env.MONGO_DB,
       process.env.COLLECTION_TO_MONITOR,
     );
-    let result = await getAQIdata(coll);
-    logger.debug(JSON.stringify(result,null,2))
+    let resultAQI = await getAQIdata(coll, '2020-10-21T06:00Z');
+    logger.debug(JSON.stringify(resultAQI, null, 2));
 
     if (io) {
-      io.emit('ws-fixed-stations', changeObj);
+      io.emit('ws-fixed-stations', resultAQI);
     }
 
-    logger.debug(changeObj);
+    // logger.debug(changeObj);
     return changeObj;
   });
   changeStream.on('error', (err) => {
