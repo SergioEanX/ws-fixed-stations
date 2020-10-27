@@ -1,12 +1,13 @@
 // MongoDB util to return mongo db collection
 const mongodbClient = require('mongodb').MongoClient;
 const logger = require('./logger');
-const mongoDB_URI = process.env.MONGO_DB_URI;
+
+const mongoDBURI = process.env.MONGO_DB_URI;
 let client;
 
 async function getDb(dbName) {
   if (!client || !client.isConnected()) {
-    client = await mongodbClient.connect(mongoDB_URI, {
+    client = await mongodbClient.connect(mongoDBURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -17,10 +18,12 @@ async function getDb(dbName) {
 
 async function getCollection(dbName, collectionName) {
   const db = await getDb(dbName);
-  const collection =db.collection(collectionName)
-  logger.debug(`Database:${db.databaseName} - Collection: ${collection.collectionName}`)
-  // console.log(db);
-  // console.log(collection)
+  const collection = db.collection(collectionName);
+  logger.debug(
+    `Database:${db.databaseName} - Collection: ${collection.collectionName}`,
+  );
+  // logger.debug(db);
+  // logger.debug(collection)
   return collection;
 }
 
