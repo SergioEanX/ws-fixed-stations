@@ -1,24 +1,30 @@
+// get .env variables from .env file (inside server folder)
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
+// read app name
 const pjson = require('./package.json');
+// use winston logger
 const logger = require('./utils/logger');
+// load express app and server
 const { app, server } = require('./app');
 
+// default port 4000
 const port = process.env.PORT || 4000;
 app.set('port', port);
 server.listen(port);
+// show name app and server PORT
 logger.debug(`${pjson.name} running → PORT ${server.address().port}`);
 
 process.on('unhandledRejection', (reason, promise) => {
   logger.error(`Unhandled rejection at ${promise},
 reason: ${reason.message}`);
 
-  process.exit(1);
+  //  process.exit(1);
 });
 
 process.on('uncaughtException', (err) => {
   logger.error(`Uncaught Exception: ${err.message}`);
-  process.exit(1);
+  //  process.exit(1);
 });
 
 // USEFUL RESOURCES
