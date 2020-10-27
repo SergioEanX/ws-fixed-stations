@@ -25,32 +25,33 @@ const {
 //   return [n, n + 1];
 // }
 
-const test = [
-  {
-    datetime: new Date('2020-10-21T12:50:00Z').toISOString(),
-    pm25: 352,
-    pm10: 324,
-    so2: 9,
-    no: 30,
-    nox: 39,
-    no2: 17,
-    o3: 38,
-    co: null,
-  },
-  {
-    datetime: new Date('2020-10-21T13:50:00Z').toISOString(),
-    pm25: 294,
-    pm10: 297,
-    so2: 3,
-    no: 32,
-    nox: 41,
-    no2: 18,
-    o3: 63,
-    co: null,
-  },
-];
+// const test = [
+//   {
+//     datetime: new Date('2020-10-21T12:50:00Z').toISOString(),
+//     pm25: 352,
+//     pm10: 324,
+//     so2: 9,
+//     no: 30,
+//     nox: 39,
+//     no2: 17,
+//     o3: 38,
+//     co: null,
+//   },
+//   {
+//     datetime: new Date('2020-10-21T13:50:00Z').toISOString(),
+//     pm25: 294,
+//     pm10: 297,
+//     so2: 3,
+//     no: 32,
+//     nox: 41,
+//     no2: 18,
+//     o3: 63,
+//     co: null,
+//   },
+// ];
 
-// if a pollutant is not specified in inputs it is undefined
+// if a pollutant is not specified in fucntion inputs it means that 
+// is undefined
 exports.calculateAQI = (
   PM10Mean_h24,
   O3MaxRunningMean,
@@ -70,7 +71,7 @@ exports.calculateAQI = (
   return AQInumber;
 };
 
-
+// returns AQI info according to which range the AQI number belongs
 exports.getAQIInfo = (AQIn) => {
   const AQIinfoObj = POLLUTANT_LABEL_COLOR_REF.filter((el) => {
     return AQIn >= el.AQI[0] && AQIn < el.AQI[1];
