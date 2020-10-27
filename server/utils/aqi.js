@@ -1,3 +1,4 @@
+// constants for AQI description anc computation
 const POLLUTANT_LABEL_COLOR_REF = [
     { label: "Good", color: "#50f0e6", AQI:[0,20] },
     { label: "Fair", color: "#50ccaa", AQI:[20,40] },
