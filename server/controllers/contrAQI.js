@@ -1,5 +1,5 @@
-//https://www.npmjs.com/package/aqi-bot
-//https://www.npmjs.com/package/aqi-calculator
+// https://www.npmjs.com/package/aqi-bot
+// https://www.npmjs.com/package/aqi-calculator
 // https://stackoverflow.com/questions/45935761/javascript-best-way-to-find-the-index-interval-in-an-array-with-given-number
 
 const {
@@ -50,24 +50,26 @@ const {
 //   },
 // ];
 
-// if a pollutant is not specified in fucntion inputs it means that 
+// if a pollutant is not specified in fucntion inputs it means that
 // is undefined
 exports.calculateAQI = (
-  PM10Mean_h24,
+  PM10MeanH24,
   O3MaxRunningMean,
   NO2Maxh,
   NO2Meanh24,
 ) => {
   // subindex return NaN when input in undefined
-  const SPM10 = (PM10Mean_h24 / LIMIT_VALUES.VL_PM10) * 1000;
+  const SPM10 = (PM10MeanH24 / LIMIT_VALUES.VL_PM10) * 100;
   const SO3 = (O3MaxRunningMean / LIMIT_VALUES.VL_O3) * 100;
   const SNO2 =
     0.5 *
     (NO2Maxh / LIMIT_VALUES.VL_NO2o +
       NO2Meanh24 / LIMIT_VALUES.VL_NO2a) *
     100;
-    // filter out NaN values in array
-  const AQInumber = Math.max(...[SPM10, SO3, SNO2].filter(v=>!isNaN(v)));
+  // filter out NaN values in array
+  const AQInumber = Math.max(
+    ...[SPM10, SO3, SNO2].filter((v) => !Number.isNaN(Number(v))),
+  );
   return AQInumber;
 };
 
@@ -79,6 +81,6 @@ exports.getAQIInfo = (AQIn) => {
   return AQIinfoObj[0];
 };
 
-//console.log(JSON.stringify(getAQIInfo(20)));
+// console.log(JSON.stringify(getAQIInfo(20)));
 
-//https://aqicn.org/city/italy/campania/portici/portici-parco-reggia/
+// https://aqicn.org/city/italy/campania/portici/portici-parco-reggia/
