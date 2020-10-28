@@ -85,7 +85,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', websocketRoutes);
-app.use(express.static(path.join(__dirname, 'public')));
+
+// use this to handle VUE APP from inside this app
+//app.use(express.static(path.join(__dirname, 'public')));
 
 exports.app = app;
 exports.server = server;
