@@ -18,10 +18,14 @@ exports.getChange = async (io) => {
       process.env.MONGO_DB,
       process.env.COLLECTION_TO_MONITOR,
     );
-    let resultAQI = await getAQIdata(coll, '2020-10-21T06:00Z');
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // GET AQI DATA (ARPAC Protocol)
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    let resultAQI = await getAQIdata(coll) //, '2020-10-21T06:00Z');
     logger.debug(JSON.stringify(resultAQI, null, 2));
 
     if (io) {
+      // EMIT AQI DATA VIA SOCKET.IO ----------------
       io.emit('ws-fixed-stations', resultAQI);
     }
 
