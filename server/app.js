@@ -61,8 +61,17 @@ io.on('connection', (socket) => {
   });
 
   socket.on('ws-fixed-stations', (msg) => {
-    socket.broadcast.emit('ws-fixed-stations', msg);
-    logger.info(`Message: ${msg}`);
+    if (typeof msg === 'object' && msg !== null) {
+      if ('command' in msg && 'date' in msg) {
+        logger.info(`Message: ${JSON.stringify(msg, null, 2)}`);
+        if (!isNaN(new Date(msg.date).getTime())) {
+          // get data and emit event
+          logger.debug('Get data and emit event');
+        }
+      }
+    }
+
+    // socket.broadcast.emit('ws-fixed-stations', msg);
   });
 });
 
