@@ -6,9 +6,24 @@
 > (except for deletes) to automatically perform a query on the same collection to
 > return AQI data
 
+#### Code structure
+Entire code is in two folder:
+* server - for Socket.io server 
+* client - a minimal VUEJS SAP App
+
+#### How to install
+Do `cd server` then `npm install`
+As done for server folder move to client with `cd client` thereafter `npm install`
+
+
+
 #### Hot to run
 
-Use `npm run start` (or `node index`) to start the application
+Move to server folder and do `npm run start` (or `node index`) to start the Socket.io web server application (default listening port is 4000)
+A check route has been implemented as:
+`http://localhost:4000/health`
+VUE APP can be served with VUE CLI by running:
+`npm run serve` from within client folder
 
 #### AQI data returned
 
